@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using FluentValidation.AspNetCore;
 using Microsoft.AspNetCore.Mvc;
 using ValidationSample.Dto;
@@ -16,11 +17,11 @@ namespace ValidationSample.Controllers
         }
 
         [HttpPost("getlist")]
-        public ActionResult<FluentValidation.Results.ValidationResult> GetList([FromBody]GetListRequestDto request)
+        public IEnumerable<string> GetList([FromBody]GetListRequestDto request)
         {
             GetListRequestDtoValidator validator = new GetListRequestDtoValidator();
             var validationResult = validator.Validate(request);
-            return validationResult;
+            return validationResult.Errors.Select(o=>o.PropertyName);
         }
     }
 }
