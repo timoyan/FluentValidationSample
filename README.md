@@ -9,3 +9,5 @@
 [Building C# objects dynamically](https://www.oreilly.com/learning/building-c-objects-dynamically)
 
 [Markdown Cheatsheet](https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet)
+
+[FluentValidation](https://fluentvalidation.net/start)
