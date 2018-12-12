@@ -27,7 +27,7 @@ namespace ValidationSample.Validator
                         .WithName("JoinTime")
                         .DependentRules(() =>
                         {
-                            RuleFor(payload => ValidateJoinTime(payload.JoinDate, payload.JoinHour, payload.JoinMin))
+                            RuleFor(payload => ValidateDateTime(payload.JoinDate, payload.JoinHour, payload.JoinMin))
                             .Equal(true)
                             .WithMessage("JoinTime format is incorrect")
                             .WithName("JoinTime");
@@ -36,10 +36,10 @@ namespace ValidationSample.Validator
                 });
         }
 
-        private bool ValidateJoinTime(string joinDate, string joinHour, string joinMin)
+        private bool ValidateDateTime(string date, string hour, string min)
         {
             DateTime calculateDatetime;
-            return DateTime.TryParse($"{joinDate}T{joinHour}:{joinMin}:00Z", out calculateDatetime);
+            return DateTime.TryParse($"{date}T{hour}:{min}:00Z", out calculateDatetime);
         }
     }
 }
