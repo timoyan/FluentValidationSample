@@ -29,10 +29,22 @@ namespace ValidationSample.Validator
                     });
             });
         }
-        private bool ValidateDateTime(string datetime)
+        private bool IsValidateDateTime(string datetime)
         {
             DateTime calculateDatetime;
             return DateTime.TryParse(datetime, out calculateDatetime);
+        }
+
+        private void ValidateDateTime(string propName, string datetime, string currentDate, IDictionary<string, string> errors)
+        {
+            if (!IsValidateDateTime(datetime))
+            {
+                errors.Add(propName, $"{propName} format is incorrect.");
+            }
+            else if (currentDate.CompareTo(datetime) > 0)
+            {
+                errors.Add(propName, $"{propName} must be greater than current date.");
+            }
         }
 
         private void ValidateDateRange(string[] dateRange, CustomContext cctx)
@@ -48,30 +60,12 @@ namespace ValidationSample.Validator
 
             if (hasStartDate)
             {
-                string propName = "StartDate";
-
-                if (!ValidateDateTime(startDate))
-                {
-                    errors.Add(propName, "StartDate format is incorrect.");
-                }
-                else if(currentDate.CompareTo(startDate) > 0)
-                {
-                    errors.Add(propName, "StartDate must be greater than current date.");
-                }
+                ValidateDateTime("StartDate", startDate, currentDate, errors);
             }
 
             if (hasEndDate)
             {
-                string propName = "EndDate";
-
-                if (!ValidateDateTime(endDate))
-                {
-                    errors.Add(propName, "EndDate format is incorrect.");
-                }
-                else if(currentDate.CompareTo(endDate) > 0)
-                {
-                    errors.Add(propName, "EndDate must be greater than current date.");
-                }
+                ValidateDateTime("EndDate", startDate, currentDate, errors);
             }
 
             if (errors.Count > 0 )
